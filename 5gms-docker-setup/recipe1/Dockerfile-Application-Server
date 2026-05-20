@@ -23,6 +23,15 @@ RUN apt-get -y install --no-install-recommends wget gnupg ca-certificates lsb-re
     apt-get update  && \
     apt-get -y install openresty
 
+# Install the dependency lib of Openresty
+RUN mkdir -p /usr/local/openresty/lualib/resty \
+ && wget https://raw.githubusercontent.com/ledgetech/lua-resty-http/master/lib/resty/http.lua \
+    -O /usr/local/openresty/lualib/resty/http.lua \
+ && wget https://raw.githubusercontent.com/ledgetech/lua-resty-http/master/lib/resty/http_headers.lua \
+    -O /usr/local/openresty/lualib/resty/http_headers.lua \
+ && wget https://raw.githubusercontent.com/ledgetech/lua-resty-http/master/lib/resty/http_connect.lua \
+    -O /usr/local/openresty/lualib/resty/http_connect.lua
+
 # Add Openresty version of nginx to the path
 ENV PATH="/usr/local/openresty/nginx/sbin:$PATH"
 
